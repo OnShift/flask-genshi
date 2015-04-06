@@ -9,7 +9,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from __future__ import absolute_import
+
 
 from collections import defaultdict
 import os.path
@@ -162,7 +162,7 @@ class Genshi(object):
         path = loader.directory(os.path.join(self.app.root_path, 'templates'))
         module_paths = {}
         modules = getattr(self.app, 'modules', {})
-        for name, module in modules.iteritems():
+        for name, module in list(modules.items()):
             module_path = os.path.join(module.root_path, 'templates')
             if os.path.isdir(module_path):
                 module_paths[name] = loader.directory(module_path)
@@ -220,13 +220,13 @@ def generate_template(template=None, context=None,
     class_ = genshi.methods[method].get('class', MarkupTemplate)
 
     context = context or {}
-    for key, value in current_app.jinja_env.globals.iteritems():
+    for key, value in list(current_app.jinja_env.globals.items()):
         context.setdefault(key, value)
     context.setdefault('filters', current_app.jinja_env.filters)
     context.setdefault('tests', current_app.jinja_env.tests)
-    for key, value in current_app.jinja_env.filters.iteritems():
+    for key, value in list(current_app.jinja_env.filters.items()):
         context.setdefault(key, value)
-    for key, value in current_app.jinja_env.tests.iteritems():
+    for key, value in list(current_app.jinja_env.tests.items()):
         context.setdefault('is%s' % key, value)
     current_app.update_template_context(context)
 
@@ -251,9 +251,9 @@ def generate_template(template=None, context=None,
 
     if filter:
         if len(getargspec(filter)[0]) == 2:  # Filter takes context?
-            stream = filter(stream, context)
+            stream = list(filter(stream, context))
         else:
-            stream = filter(stream)
+            stream = list(filter(stream))
 
     return stream
 
