@@ -67,7 +67,8 @@ class Genshi(object):
             'txt': 'text',
             'js': 'js',
             'css': 'css',
-            'svg': 'svg'
+            'svg': 'svg',
+            'kid': 'kid'
         }
 
         #: Render methods.
@@ -111,7 +112,11 @@ class Genshi(object):
                 'serializer': 'xml',
                 'doctype': 'svg',
                 'mimetype': 'image/svg+xml'
-            }
+            },
+            'kid': {
+                'serializer': 'html',
+                'doctype': 'html',
+            },
         }
 
         #: Filter functions to be applied to templates.
